@@ -107,7 +107,7 @@ restart_button = pygame.image.load("restart_sign.png")
 restart_button_rect = restart_button.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
 
 def game_over():
-    global score, bird_y, bird_y_change, current_bird_index, bird_animation_counter, pipe_group, run, game_started
+    global score, bird_y, bird_y_change, current_bird_index, bird_animation_counter, pipe_group, game_started
 
     # Display final score
     final_score_text = score_font.render(f"Final Score: {score}", True, (255, 255, 255))
@@ -117,6 +117,29 @@ def game_over():
     screen.blit(restart_button, restart_button_rect)
 
     pygame.display.update()
+
+    # Freeze the screen until the player clicks the restart button
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if restart_button_rect.collidepoint(mouse_x, mouse_y):
+                    # Reset variables
+                    score = 0
+                    bird_y = 300
+                    bird_y_change = 0
+                    current_bird_index = 0
+                    bird_animation_counter = 0
+                    pipe_group.empty()
+                    game_started = False
+                    return
+
+        pygame.display.update()
+
 
 run = True
 game_started = False  # Track if the game has started
@@ -139,19 +162,6 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            if restart_button_rect.collidepoint(mouse_x, mouse_y):
-                # Reset variables
-                score = 0
-                bird_y = 300
-                bird_y_change = 0
-                current_bird_index = 0
-                bird_animation_counter = 0
-                pipe_group.empty()
-                game_started = False
-
 
         if not game_started:
             if event.type == pygame.KEYDOWN:
@@ -197,8 +207,6 @@ while run:
         if bird_animation_counter >= BIRD_ANIMATION_SPEED:
             current_bird_index = (current_bird_index + 1) % len(BIRD_IMAGES)
             bird_animation_counter = 0
-
-
         display_bird()
         display_score()
 

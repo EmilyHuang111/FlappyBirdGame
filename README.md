@@ -2,6 +2,9 @@
 
 A recreation of the classic Flappy Bird game using Python and Pygame. Try to navigate the bird through obstacles without hitting them!
 
+![Game Demo](./demo.gif)
+
+
 ## Features
 
 - **Background Animation**: Continuously scrolling background and ground for a realistic effect.

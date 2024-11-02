@@ -17,7 +17,7 @@ A recreation of the classic Flappy Bird game using Python and Pygame. Try to nav
 
 To run the Flappy Bird Game, follow these steps:
 
-1. **Install Python**: Make sure Python is installed on your system. You can download it from [python.org](https://www.python.org/).
+1. **Install Python**: Make sure Python is installed on your system. 
 
 2. **Install Pygame**: Install the Pygame library using pip:
    ```bash
